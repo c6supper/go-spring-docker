@@ -1,0 +1,22 @@
+version: '3.8'
+
+services:
+   go-spring:
+      stdin_open: true
+      tty: true
+      command: [/bin/sh]
+      image: golang:alpine3.14
+      container_name: go-spring
+      cap_add:
+         - SYS_ADMIN 
+      network_mode: host
+      volumes:
+        - /home/c6supper/.go-spring/go-spring/code/:/code/
+      restart: always
+      environment:
+         RUN_AFTER_SIDECAR: 'no'
+      logging:
+         driver: 'json-file'
+         options:
+            max-size: '10M'
+            max-file: '1024'

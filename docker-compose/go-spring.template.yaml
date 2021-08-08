@@ -1,0 +1,22 @@
+version: '3.8'
+
+services:
+   go-spring:
+      stdin_open: true
+      tty: true
+      command: [/bin/sh]
+      image: golang:alpine3.14
+      container_name: go-spring
+      cap_add:
+         - SYS_ADMIN 
+      network_mode: ${APP_NETWORK_MODE}
+      volumes:
+        - ${GOSPRING_CODE_VOLUME}:${GOSPRING_DIR}
+      restart: ${APP_RESTART_POLICY}
+      environment:
+         RUN_AFTER_SIDECAR: 'no'
+      logging:
+         driver: ${APP_LOGGING_DRIVER}
+         options:
+            max-size: ${APP_LOGGING_SIZE}
+            max-file: ${APP_LOGGING_NUMBER}
